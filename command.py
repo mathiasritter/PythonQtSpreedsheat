@@ -1,6 +1,5 @@
 from PySide.QtGui import QUndoCommand
 
-
 class EditCommand(QUndoCommand):
 
     def __init__(self, model, index):
@@ -84,4 +83,4 @@ class RemoveColumnsCommand(QUndoCommand):
     def redo(self):
         self.old_header = self.model.header
         self.old_list = self.model.data_list
-        self.model.RemoveColumns(self.column, self.count)
+        self.model.removeColumns(self.column, self.count)

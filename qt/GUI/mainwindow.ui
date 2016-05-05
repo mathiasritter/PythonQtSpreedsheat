@@ -17,6 +17,9 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTableView" name="tableView">
+      <property name="selectionMode">
+       <enum>QAbstractItemView::SingleSelection</enum>
+      </property>
       <property name="sortingEnabled">
        <bool>true</bool>
       </property>

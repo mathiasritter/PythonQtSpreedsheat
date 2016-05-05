@@ -5,7 +5,6 @@ class CSV:
 
     @staticmethod
     def read(filename):
-
         with open(filename, "r") as file:
             reader = csv.reader(file, delimiter=";")
             lines = [line for line in reader]
@@ -13,7 +12,6 @@ class CSV:
 
     @staticmethod
     def write(filename, header, lines):
-
         with open(filename, "w") as file:
             writer = csv.writer(file)
             writer.writerow(header)

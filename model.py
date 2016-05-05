@@ -49,8 +49,10 @@ class Model(QAbstractTableModel):
             return False
 
     def duplicateRow(self, row, parent=QModelIndex()):
-        self.beginInsertRows(parent, row, 1)
-        to_duplicate = self.data_list[row-1].copy()
+        if row == self.rowCount():
+            row -= 1
+        self.beginInsertRows(parent, row, row)
+        to_duplicate = self.data_list[row].copy()
         self.data_list.insert(row, to_duplicate)
         self.endInsertRows()
         return True

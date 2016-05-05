@@ -19,6 +19,35 @@ class Model(QAbstractTableModel):
         self.endInsertColumns()
         self.endInsertRows()
 
+    def insertRows(self, row, count, parent=QModelIndex()):
+        self.beginInsertRows(parent, row, row+count-1)
+        for i in range(count):
+            self.data_list.insert(row, {key: "" for key in self.header})
+        self.endInsertRows()
+        return True
+
+    def removeRows(self, row, count, parent=QModelIndex()):
+        self.beginRemoveRows(parent, row, row+count-1)
+        del self.data_list[row:row+count]
+        self.endRemoveRows()
+        return True
+
+    def insertColumns(self, column, count, parent=QModelIndex()):
+        self.beginInsertColumns(parent, column, column+count-1)
+        for i in range(count):
+            self.header.append(column+count)
+            for row in self.data_list:
+                row[column+count] = ""
+        self.endInsertColumns()
+
+    def removeColumns(self, column, count, parent=QModelIndex()):
+        self.beginRemoveColumns(parent, column, column+count-1)
+        to_remove = self.header[column:column+count-1]
+        for row in self.data_list:
+            for remove in to_remove:
+                del row[remove]
+        self.endRemoveColumns()
+
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self.header[section]

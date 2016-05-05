@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qt/GUI/mainwindow.ui'
 #
-# Created: Thu May  5 16:09:24 2016
+# Created: Thu May  5 18:15:21 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,7 +18,9 @@ class Ui_MainWindow(object):
         self.gridLayout = QtGui.QGridLayout(self.centralWidget)
         self.gridLayout.setObjectName("gridLayout")
         self.tableView = QtGui.QTableView(self.centralWidget)
+        self.tableView.setSortingEnabled(True)
         self.tableView.setObjectName("tableView")
+        self.tableView.verticalHeader().setVisible(False)
         self.gridLayout.addWidget(self.tableView, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtGui.QMenuBar()
@@ -48,11 +50,18 @@ class Ui_MainWindow(object):
         self.actionRedo.setObjectName("actionRedo")
         self.actionSave_As = QtGui.QAction(MainWindow)
         self.actionSave_As.setObjectName("actionSave_As")
+        self.actionAdd_Column = QtGui.QAction(MainWindow)
+        self.actionAdd_Column.setObjectName("actionAdd_Column")
+        self.actionRemove_Column = QtGui.QAction(MainWindow)
+        self.actionRemove_Column.setObjectName("actionRemove_Column")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
         self.menuTable.addAction(self.actionAdd)
         self.menuTable.addAction(self.actionRemove)
+        self.menuTable.addSeparator()
+        self.menuTable.addAction(self.actionAdd_Column)
+        self.menuTable.addAction(self.actionRemove_Column)
         self.menuEdit.addAction(self.actionUndo)
         self.menuEdit.addAction(self.actionRedo)
         self.menuBar.addAction(self.menuFile.menuAction())
@@ -70,8 +79,10 @@ class Ui_MainWindow(object):
         self.actionOpen.setText(QtGui.QApplication.translate("MainWindow", "Open", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd.setText(QtGui.QApplication.translate("MainWindow", "Add Row", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionRemove.setText(QtGui.QApplication.translate("MainWindow", "Remove Row", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove.setText(QtGui.QApplication.translate("MainWindow", "Remove Row(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUndo.setText(QtGui.QApplication.translate("MainWindow", "Undo", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRedo.setText(QtGui.QApplication.translate("MainWindow", "Redo", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave_As.setText(QtGui.QApplication.translate("MainWindow", "Save As", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd_Column.setText(QtGui.QApplication.translate("MainWindow", "Add Column", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove_Column.setText(QtGui.QApplication.translate("MainWindow", "Remove Column(s)", None, QtGui.QApplication.UnicodeUTF8))
 

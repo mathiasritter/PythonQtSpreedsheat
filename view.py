@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qt/GUI/mainwindow.ui'
 #
-# Created: Thu May  5 19:40:55 2016
+# Created: Thu May  5 20:41:55 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -55,16 +55,27 @@ class Ui_MainWindow(object):
         self.actionAdd_Column.setObjectName("actionAdd_Column")
         self.actionRemove_Column = QtGui.QAction(MainWindow)
         self.actionRemove_Column.setObjectName("actionRemove_Column")
+        self.actionDuplicate_Row = QtGui.QAction(MainWindow)
+        self.actionDuplicate_Row.setObjectName("actionDuplicate_Row")
+        self.actionCopy = QtGui.QAction(MainWindow)
+        self.actionCopy.setObjectName("actionCopy")
+        self.actionCut = QtGui.QAction(MainWindow)
+        self.actionCut.setObjectName("actionCut")
+        self.actionPaste = QtGui.QAction(MainWindow)
+        self.actionPaste.setObjectName("actionPaste")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSave_As)
         self.menuTable.addAction(self.actionAdd)
         self.menuTable.addAction(self.actionRemove)
         self.menuTable.addSeparator()
-        self.menuTable.addAction(self.actionAdd_Column)
-        self.menuTable.addAction(self.actionRemove_Column)
+        self.menuTable.addAction(self.actionDuplicate_Row)
         self.menuEdit.addAction(self.actionUndo)
         self.menuEdit.addAction(self.actionRedo)
+        self.menuEdit.addSeparator()
+        self.menuEdit.addAction(self.actionCopy)
+        self.menuEdit.addAction(self.actionCut)
+        self.menuEdit.addAction(self.actionPaste)
         self.menuBar.addAction(self.menuFile.menuAction())
         self.menuBar.addAction(self.menuEdit.menuAction())
         self.menuBar.addAction(self.menuTable.menuAction())
@@ -86,4 +97,8 @@ class Ui_MainWindow(object):
         self.actionSave_As.setText(QtGui.QApplication.translate("MainWindow", "Save As", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd_Column.setText(QtGui.QApplication.translate("MainWindow", "Add Column", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove_Column.setText(QtGui.QApplication.translate("MainWindow", "Remove Column(s)", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDuplicate_Row.setText(QtGui.QApplication.translate("MainWindow", "Duplicate Row", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCopy.setText(QtGui.QApplication.translate("MainWindow", "Copy", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCut.setText(QtGui.QApplication.translate("MainWindow", "Cut", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionPaste.setText(QtGui.QApplication.translate("MainWindow", "Paste", None, QtGui.QApplication.UnicodeUTF8))
 

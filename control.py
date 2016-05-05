@@ -2,7 +2,7 @@ import sys
 from PySide import QtGui, QtCore
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
 
-from command import InsertRowsCommand, RemoveRowsCommand, InsertColumnsCommand, RemoveColumnsCommand
+from command import InsertRowsCommand, RemoveRowsCommand
 from csvio import CSV
 from model import Model
 from view import Ui_MainWindow
@@ -33,8 +33,6 @@ class Control(QtGui.QMainWindow):
         self.view.actionSave_As.triggered.connect(self.save_as)
         self.view.actionAdd.triggered.connect(self.add_row)
         self.view.actionRemove.triggered.connect(self.remove_rows)
-        self.view.actionAdd_Column.triggered.connect(self.add_column)
-        self.view.actionRemove_Column.triggered.connect(self.remove_columns)
         self.view.actionUndo.triggered.connect(self.undo)
         self.view.actionRedo.triggered.connect(self.redo)
 
@@ -44,13 +42,6 @@ class Control(QtGui.QMainWindow):
             return indexes[0].row(), len(indexes)
         else:
             return len(self.model.data_list), 1
-
-    def get_selected_columns(self):
-        indexes = self.view.tableView.selectionModel().selectedIndexes()
-        if indexes:
-            return indexes[0].column(), len(indexes)
-        else:
-            return len(self.model.header), 1
 
     def undo(self):
         self.undo_stack.undo()
@@ -65,14 +56,6 @@ class Control(QtGui.QMainWindow):
     def remove_rows(self):
         row, count = self.get_selected_rows()
         self.undo_stack.push(RemoveRowsCommand(self.model, row, count))
-
-    def add_column(self):
-        column, count = self.get_selected_columns()
-        self.undo_stack.push(InsertColumnsCommand(self.model, column, 1))
-
-    def remove_columns(self):
-        column, count = self.get_selected_columns()
-        self.undo_stack.push(RemoveColumnsCommand(self.model, column, count))
 
     def open(self):
         filename = QFileDialog.getOpenFileName(self, aption="Open CSV file", filter="CSV file (*.csv)")[0]

@@ -50,37 +50,3 @@ class RemoveRowsCommand(QUndoCommand):
         self.old_header = list(self.model.header)
         self.old_list = list(self.model.data_list)
         self.model.removeRows(self.row, self.count)
-
-
-class InsertColumnsCommand(QUndoCommand):
-
-    def __init__(self, model, column, count):
-        super().__init__()
-        self.model = model
-        self.column = column
-        self.count = count
-
-    def undo(self):
-        self.model.removeColumns(self.column, self.count)
-
-    def redo(self):
-        self.model.insertColumns(self.column, self.count)
-
-
-class RemoveColumnsCommand(QUndoCommand):
-
-    def __init__(self, model, column, count):
-        super().__init__()
-        self.model = model
-        self.column = column
-        self.count = count
-        self.old_list = None
-        self.old_header = None
-
-    def undo(self):
-        self.model.set_model_data(self.old_header, self.old_list)
-
-    def redo(self):
-        self.old_header = list(self.model.header)
-        self.old_list = list(self.model.data_list)
-        self.model.removeColumns(self.column, self.count)

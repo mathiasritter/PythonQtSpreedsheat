@@ -1,4 +1,4 @@
-from csv import Sniffer, DictReader, DictWriter, Dialect
+import csv
 
 
 class CSV:
@@ -7,19 +7,14 @@ class CSV:
     def read(filename):
 
         with open(filename, "r") as file:
-
-            sample = file.read(4096)
-            dialect = Sniffer().sniff(sample, delimiters=[";", ","])
-            file.seek(0)
-
-            reader = DictReader(file, dialect=dialect)
+            reader = csv.reader(file, delimiter=";")
             lines = [line for line in reader]
-            return reader.fieldnames, lines
+            return lines[:1][0], lines[1:]
 
     @staticmethod
     def write(filename, header, lines):
 
         with open(filename, "w") as file:
-            writer = DictWriter(file, header)
-            writer.writeheader()
-            writer.writerows(lines)
+            writer = csv.writer(file)
+            writer.writerow(header)
+            writer.wrie(lines)

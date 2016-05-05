@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qt/GUI/mainwindow.ui'
 #
-# Created: Thu May  5 20:41:55 2016
+# Created: Thu May  5 21:27:28 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,7 +18,6 @@ class Ui_MainWindow(object):
         self.gridLayout = QtGui.QGridLayout(self.centralWidget)
         self.gridLayout.setObjectName("gridLayout")
         self.tableView = QtGui.QTableView(self.centralWidget)
-        self.tableView.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
         self.tableView.setSortingEnabled(True)
         self.tableView.setObjectName("tableView")
         self.tableView.verticalHeader().setVisible(False)

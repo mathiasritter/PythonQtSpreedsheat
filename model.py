@@ -48,8 +48,11 @@ class Model(QAbstractTableModel):
         else:
             return False
 
-    def setHeaderData(self, section, orientation, value, role=Qt.EditRole):
-        self.header[section] = value
+    def duplicateRow(self, row, parent=QModelIndex()):
+        self.beginInsertRows(parent, row, 1)
+        to_duplicate = self.data_list[row-1].copy()
+        self.data_list.insert(row, to_duplicate)
+        self.endInsertRows()
         return True
 
     def flags(self, *args, **kwargs):

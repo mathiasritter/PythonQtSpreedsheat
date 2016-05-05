@@ -2,7 +2,7 @@ import sys
 from PySide import QtGui, QtCore
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
 
-from command import InsertRowsCommand, RemoveRowsCommand
+from command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand
 from csvio import CSV
 from model import Model
 from view import Ui_MainWindow
@@ -33,6 +33,7 @@ class Control(QtGui.QMainWindow):
         self.view.actionSave_As.triggered.connect(self.save_as)
         self.view.actionAdd.triggered.connect(self.add_row)
         self.view.actionRemove.triggered.connect(self.remove_rows)
+        self.view.actionDuplicate_Row.triggered.connect(self.duplicate_row)
         self.view.actionUndo.triggered.connect(self.undo)
         self.view.actionRedo.triggered.connect(self.redo)
 
@@ -52,6 +53,10 @@ class Control(QtGui.QMainWindow):
     def add_row(self):
         row, count = self.get_selected_rows()
         self.undo_stack.push(InsertRowsCommand(self.model, row, 1))
+
+    def duplicate_row(self):
+        row, count = self.get_selected_rows()
+        self.undo_stack.push(DuplicateRowCommand(self.model, row))
 
     def remove_rows(self):
         row, count = self.get_selected_rows()

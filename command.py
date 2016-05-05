@@ -50,3 +50,17 @@ class RemoveRowsCommand(QUndoCommand):
         self.old_header = list(self.model.header)
         self.old_list = list(self.model.data_list)
         self.model.removeRows(self.row, self.count)
+
+
+class DuplicateRowCommand(QUndoCommand):
+
+    def __init__(self, model, row):
+        super().__init__()
+        self.model = model
+        self.row = row
+
+    def undo(self):
+        self.model.removeRows(self.row, 1)
+
+    def redo(self):
+        self.model.duplicateRow(self.row)

@@ -47,9 +47,9 @@ class RemoveRowsCommand(QUndoCommand):
         self.model.set_model_data(self.old_header, self.old_list)
 
     def redo(self):
-        self.old_header = self.model.header
-        self.old_list = self.model.data_list
-        self.model.RemoveRows(self.row, self.count)
+        self.old_header = list(self.model.header)
+        self.old_list = list(self.model.data_list)
+        self.model.removeRows(self.row, self.count)
 
 
 class InsertColumnsCommand(QUndoCommand):
@@ -81,6 +81,6 @@ class RemoveColumnsCommand(QUndoCommand):
         self.model.set_model_data(self.old_header, self.old_list)
 
     def redo(self):
-        self.old_header = self.model.header
-        self.old_list = self.model.data_list
+        self.old_header = list(self.model.header)
+        self.old_list = list(self.model.data_list)
         self.model.removeColumns(self.column, self.count)

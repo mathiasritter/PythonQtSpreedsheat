@@ -1,5 +1,5 @@
 import sys
-from PySide import QtGui
+from PySide import QtGui, QtCore
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
 
 from command import InsertRowsCommand, RemoveRowsCommand, InsertColumnsCommand, RemoveColumnsCommand
@@ -43,14 +43,14 @@ class Control(QtGui.QMainWindow):
         if indexes:
             return indexes[0].row(), len(indexes)
         else:
-            return None, None
+            return len(self.model.data_list), 1
 
     def get_selected_columns(self):
         indexes = self.view.tableView.selectionModel().selectedIndexes()
         if indexes:
             return indexes[0].column(), len(indexes)
         else:
-            return None, None
+            return len(self.model.header), 1
 
     def undo(self):
         self.undo_stack.undo()
@@ -68,7 +68,7 @@ class Control(QtGui.QMainWindow):
 
     def add_column(self):
         column, count = self.get_selected_columns()
-        self.undo_stack.push(InsertColumnsCommand(self.model, column, count))
+        self.undo_stack.push(InsertColumnsCommand(self.model, column, 1))
 
     def remove_columns(self):
         column, count = self.get_selected_columns()

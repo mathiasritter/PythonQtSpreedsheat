@@ -10,14 +10,11 @@ class Model(QAbstractTableModel):
         self.data_list = []
 
     def set_model_data(self, header, data_list):
-        self.beginInsertRows(QModelIndex(), 0, len(data_list)-1)
-        self.beginInsertColumns(QModelIndex(), 0, len(header)-1)
-
+        self.beginResetModel()
+        self.reset()
         self.header = header
         self.data_list = data_list
-
-        self.endInsertColumns()
-        self.endInsertRows()
+        self.endResetModel()
 
     def insertRows(self, row, count, parent=QModelIndex()):
         self.beginInsertRows(parent, row, row+count-1)
@@ -34,15 +31,18 @@ class Model(QAbstractTableModel):
 
     def insertColumns(self, column, count, parent=QModelIndex()):
         self.beginInsertColumns(parent, column, column+count-1)
+
         for i in range(count):
-            self.header.append(column+count)
+            column_count = len(self.header)
+            self.header.insert(column, column_count)
             for row in self.data_list:
-                row[column+count] = ""
+                row[column_count] = ""
         self.endInsertColumns()
 
     def removeColumns(self, column, count, parent=QModelIndex()):
         self.beginRemoveColumns(parent, column, column+count-1)
-        to_remove = self.header[column:column+count-1]
+        to_remove = self.header[column:column+count]
+        del self.header[column:column+count]
         for row in self.data_list:
             for remove in to_remove:
                 del row[remove]
@@ -66,6 +66,14 @@ class Model(QAbstractTableModel):
             return True
         else:
             return False
+
+    def setHeaderData(self, section, orientation, value, role=Qt.EditRole):
+        old = self.header[section]
+        self.header[section] = value
+        for row in self.data_list:
+            row[value] = row[old]
+            del row[old]
+        return True
 
     def flags(self, *args, **kwargs):
         return Qt.ItemIsEditable | Qt.ItemIsEnabled | Qt.ItemIsSelectable

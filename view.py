@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qt/GUI/mainwindow.ui'
 #
-# Created: Thu May  5 12:45:55 2016
+# Created: Thu May  5 16:09:24 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -15,9 +15,11 @@ class Ui_MainWindow(object):
         MainWindow.resize(400, 300)
         self.centralWidget = QtGui.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
+        self.gridLayout = QtGui.QGridLayout(self.centralWidget)
+        self.gridLayout.setObjectName("gridLayout")
         self.tableView = QtGui.QTableView(self.centralWidget)
-        self.tableView.setGeometry(QtCore.QRect(0, 0, 401, 241))
         self.tableView.setObjectName("tableView")
+        self.gridLayout.addWidget(self.tableView, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralWidget)
         self.menuBar = QtGui.QMenuBar()
         self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 22))
@@ -29,9 +31,6 @@ class Ui_MainWindow(object):
         self.menuEdit = QtGui.QMenu(self.menuBar)
         self.menuEdit.setObjectName("menuEdit")
         MainWindow.setMenuBar(self.menuBar)
-        self.mainToolBar = QtGui.QToolBar(MainWindow)
-        self.mainToolBar.setObjectName("mainToolBar")
-        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.mainToolBar)
         self.statusBar = QtGui.QStatusBar(MainWindow)
         self.statusBar.setObjectName("statusBar")
         MainWindow.setStatusBar(self.statusBar)
@@ -47,8 +46,11 @@ class Ui_MainWindow(object):
         self.actionUndo.setObjectName("actionUndo")
         self.actionRedo = QtGui.QAction(MainWindow)
         self.actionRedo.setObjectName("actionRedo")
+        self.actionSave_As = QtGui.QAction(MainWindow)
+        self.actionSave_As.setObjectName("actionSave_As")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionSave_As)
         self.menuTable.addAction(self.actionAdd)
         self.menuTable.addAction(self.actionRemove)
         self.menuEdit.addAction(self.actionUndo)
@@ -67,8 +69,9 @@ class Ui_MainWindow(object):
         self.menuEdit.setTitle(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setText(QtGui.QApplication.translate("MainWindow", "Open", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAdd.setText(QtGui.QApplication.translate("MainWindow", "Add", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionRemove.setText(QtGui.QApplication.translate("MainWindow", "Remove", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd.setText(QtGui.QApplication.translate("MainWindow", "Add Row", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove.setText(QtGui.QApplication.translate("MainWindow", "Remove Row", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUndo.setText(QtGui.QApplication.translate("MainWindow", "Undo", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRedo.setText(QtGui.QApplication.translate("MainWindow", "Redo", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSave_As.setText(QtGui.QApplication.translate("MainWindow", "Save As", None, QtGui.QApplication.UnicodeUTF8))
 

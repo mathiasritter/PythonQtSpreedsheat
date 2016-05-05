@@ -13,6 +13,7 @@ class CSV:
     @staticmethod
     def write(filename, header, lines):
         with open(filename, "w") as file:
-            writer = csv.writer(file)
+            writer = csv.writer(file, delimiter=";")
             writer.writerow(header)
-            writer.wrie(lines)
+            for line in lines:
+                writer.writerow(line)

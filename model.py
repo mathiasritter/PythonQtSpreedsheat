@@ -43,7 +43,9 @@ class Model(QAbstractTableModel):
 
     def setData(self, index, value, role=Qt.EditRole):
         if index.isValid() and role == Qt.EditRole:
+            self.beginResetModel()
             self.data_list[index.row()][index.column()] = value
+            self.endResetModel()
             return True
         else:
             return False

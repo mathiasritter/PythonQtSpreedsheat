@@ -2,7 +2,7 @@ import sys
 from PySide import QtGui, QtCore
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
 
-from command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand
+from command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand, EditCommand
 from csvio import CSV
 from model import Model
 from view import Ui_MainWindow
@@ -36,6 +36,9 @@ class Control(QtGui.QMainWindow):
         self.view.actionDuplicate_Row.triggered.connect(self.duplicate_row)
         self.view.actionUndo.triggered.connect(self.undo)
         self.view.actionRedo.triggered.connect(self.redo)
+        self.view.actionCopy.triggered.connect(self.copy)
+        self.view.actionPaste.triggered.connect(self.paste)
+        self.view.actionCut.triggered.connect(self.cut)
 
     def get_selected_rows(self):
         indexes = self.view.tableView.selectionModel().selectedIndexes()
@@ -49,6 +52,28 @@ class Control(QtGui.QMainWindow):
 
     def redo(self):
         self.undo_stack.redo()
+
+    def copy(self):
+        selection = self.view.tableView.selectionModel().selectedIndexes()
+
+        if len(selection) == 1:
+            text = self.model.data(selection[0])
+            QApplication.clipboard().setText(text)
+            return True
+
+    def cut(self):
+        if self.copy():
+            selection = self.view.tableView.selectionModel().selectedIndexes()
+            self.undo_stack.push(EditCommand(self.model, selection[0]))
+
+    def paste(self):
+        selection = self.view.tableView.selectionModel().selectedIndexes()
+
+        if len(selection) == 1:
+            text = QApplication.clipboard().text()
+            command = EditCommand(self.model, selection[0])
+            command.new_value = text
+            self.undo_stack.push(command)
 
     def add_row(self):
         row, count = self.get_selected_rows()
@@ -72,12 +97,12 @@ class Control(QtGui.QMainWindow):
         if self.file_name is None:
             self.save_as()
         else:
-            CSV.write(self.filename, self.model.header, self.model.data_list)
+            CSV.write(self.file_name, self.model.header, self.model.data_list)
 
     def save_as(self):
-        filename = QFileDialog.getSaveFileName(self, caption="Save CSV file", filter="CSV file (*.csv)")[0]
-        if len(filename) > 0:
-            self.file_name = filename
+        file_name = QFileDialog.getSaveFileName(self, caption="Save CSV file", filter="CSV file (*.csv)")[0]
+        if len(file_name) > 0:
+            self.file_name = file_name
             self.save()
 
 

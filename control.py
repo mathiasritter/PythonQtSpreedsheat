@@ -88,9 +88,10 @@ class Control(QtGui.QMainWindow):
         self.undo_stack.push(RemoveRowsCommand(self.model, row, count))
 
     def open(self):
-        filename = QFileDialog.getOpenFileName(self, aption="Open CSV file", filter="CSV file (*.csv)")[0]
-        if len(filename) > 0:
-            header, lines = CSV.read(filename)
+        file_name = QFileDialog.getOpenFileName(self, aption="Open CSV file", filter="CSV file (*.csv)")[0]
+        if len(file_name) > 0:
+            self.file_name = file_name
+            header, lines = CSV.read(file_name)
             self.model.set_model_data(header, lines)
 
     def save(self):

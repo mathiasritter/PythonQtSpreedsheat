@@ -1,6 +1,6 @@
 from PySide.QtGui import QStyledItemDelegate, QLineEdit
 
-from command import EditCommand
+from tablemodel.command import EditCommand
 
 
 class ItemDelegate(QStyledItemDelegate):

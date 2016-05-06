@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'qt/GUI/mainwindow.ui'
 #
-# Created: Thu May  5 21:27:28 2016
+# Created: Fri May  6 09:50:26 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -88,16 +88,27 @@ class Ui_MainWindow(object):
         self.menuTable.setTitle(QtGui.QApplication.translate("MainWindow", "Table", None, QtGui.QApplication.UnicodeUTF8))
         self.menuEdit.setTitle(QtGui.QApplication.translate("MainWindow", "Edit", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpen.setText(QtGui.QApplication.translate("MainWindow", "Open", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionOpen.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+O", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave.setText(QtGui.QApplication.translate("MainWindow", "Save", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSave.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd.setText(QtGui.QApplication.translate("MainWindow", "Add Row", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionAdd.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+I", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove.setText(QtGui.QApplication.translate("MainWindow", "Remove Row(s)", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRemove.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+R", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUndo.setText(QtGui.QApplication.translate("MainWindow", "Undo", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionUndo.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Z", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRedo.setText(QtGui.QApplication.translate("MainWindow", "Redo", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionRedo.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Shift+Z", None, QtGui.QApplication.UnicodeUTF8))
         self.actionSave_As.setText(QtGui.QApplication.translate("MainWindow", "Save As", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionSave_As.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+Shift+S", None, QtGui.QApplication.UnicodeUTF8))
         self.actionAdd_Column.setText(QtGui.QApplication.translate("MainWindow", "Add Column", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRemove_Column.setText(QtGui.QApplication.translate("MainWindow", "Remove Column(s)", None, QtGui.QApplication.UnicodeUTF8))
         self.actionDuplicate_Row.setText(QtGui.QApplication.translate("MainWindow", "Duplicate Row", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionDuplicate_Row.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+D", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCopy.setText(QtGui.QApplication.translate("MainWindow", "Copy", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCopy.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+C", None, QtGui.QApplication.UnicodeUTF8))
         self.actionCut.setText(QtGui.QApplication.translate("MainWindow", "Cut", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionCut.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+X", None, QtGui.QApplication.UnicodeUTF8))
         self.actionPaste.setText(QtGui.QApplication.translate("MainWindow", "Paste", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionPaste.setShortcut(QtGui.QApplication.translate("MainWindow", "Meta+V", None, QtGui.QApplication.UnicodeUTF8))
 

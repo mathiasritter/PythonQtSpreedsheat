@@ -2,10 +2,10 @@ import sys
 
 from PySide import QtGui
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
-from command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand, EditCommand
-from csvio import CSV
-from model import Model
-from view import Ui_MainWindow
+from tablemodel.command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand, EditCommand
+from tablemodel.csvio import CSV
+from tablemodel.model import Model
+from tablemodel.view import Ui_MainWindow
 
 from tablemodel.delegate import ItemDelegate
 

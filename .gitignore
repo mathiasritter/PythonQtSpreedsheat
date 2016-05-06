@@ -185,5 +185,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-qt/build-GUI-Desktop_Qt_5_5_1_clang_64bit-Debug/
+tablemodel/qt/build-GUI-Desktop_Qt_5_5_1_clang_64bit-Debug/
+tablewidget/qt/build-GUI-Desktop_Qt_5_5_1_clang_64bit-Debug/
 

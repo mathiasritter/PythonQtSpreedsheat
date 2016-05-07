@@ -4,7 +4,6 @@ from tablemodel.command import EditCommand
 
 
 class ItemDelegate(QStyledItemDelegate):
-
     def __init__(self, control):
         super().__init__()
         self.control = control

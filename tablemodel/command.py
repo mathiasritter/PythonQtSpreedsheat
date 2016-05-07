@@ -1,7 +1,7 @@
 from PySide.QtGui import QUndoCommand
 
-class EditCommand(QUndoCommand):
 
+class EditCommand(QUndoCommand):
     def __init__(self, model, index):
         QUndoCommand.__init__(self)
         self.old_value = None
@@ -19,7 +19,6 @@ class EditCommand(QUndoCommand):
 
 
 class InsertRowCommand(QUndoCommand):
-
     def __init__(self, model, row):
         super().__init__()
         self.model = model
@@ -33,7 +32,6 @@ class InsertRowCommand(QUndoCommand):
 
 
 class RemoveRowsCommand(QUndoCommand):
-
     def __init__(self, model, row, count):
         super().__init__()
         self.model = model
@@ -52,7 +50,6 @@ class RemoveRowsCommand(QUndoCommand):
 
 
 class DuplicateRowCommand(QUndoCommand):
-
     def __init__(self, model, row):
         super().__init__()
         self.model = model

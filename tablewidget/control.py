@@ -10,7 +10,6 @@ from tablewidget.view import Ui_MainWindow
 
 
 class Control(QMainWindow):
-
     def __init__(self):
         super().__init__()
 

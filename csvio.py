@@ -2,7 +2,6 @@ import csv
 
 
 class CSV:
-
     @staticmethod
     def read(filename):
         with open(filename, "r") as file:

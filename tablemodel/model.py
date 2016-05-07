@@ -2,7 +2,6 @@ from PySide.QtCore import QAbstractTableModel, Qt, QModelIndex
 
 
 class Model(QAbstractTableModel):
-
     def __init__(self, parent):
 
         super().__init__(parent)
@@ -17,15 +16,15 @@ class Model(QAbstractTableModel):
         self.endResetModel()
 
     def insertRows(self, row, count, parent=QModelIndex()):
-        self.beginInsertRows(parent, row, row+count-1)
+        self.beginInsertRows(parent, row, row + count - 1)
         for i in range(count):
             self.data_list.insert(row, self.columnCount() * [None])
         self.endInsertRows()
         return True
 
     def removeRows(self, row, count, parent=QModelIndex()):
-        self.beginRemoveRows(parent, row, row+count-1)
-        del self.data_list[row:row+count]
+        self.beginRemoveRows(parent, row, row + count - 1)
+        del self.data_list[row:row + count]
         self.endRemoveRows()
         return True
 

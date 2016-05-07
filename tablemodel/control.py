@@ -11,7 +11,6 @@ from tablemodel.view import Ui_MainWindow
 
 
 class Control(QtGui.QMainWindow):
-
     def __init__(self):
 
         super().__init__()

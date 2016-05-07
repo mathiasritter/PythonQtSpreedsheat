@@ -2,12 +2,12 @@ import sys
 
 from PySide import QtGui
 from PySide.QtGui import QApplication, QFileDialog, QUndoStack
-from tablemodel.command import InsertRowsCommand, RemoveRowsCommand, DuplicateRowCommand, EditCommand
-from tablemodel.csvio import CSV
+
+from csvio import CSV
+from delegate import ItemDelegate
+from tablemodel.command import RemoveRowsCommand, DuplicateRowCommand, EditCommand, InsertRowCommand
 from tablemodel.model import Model
 from tablemodel.view import Ui_MainWindow
-
-from tablemodel.delegate import ItemDelegate
 
 
 class Control(QtGui.QMainWindow):
@@ -42,11 +42,12 @@ class Control(QtGui.QMainWindow):
         self.view.actionCut.triggered.connect(self.cut)
 
     def get_selected_rows(self):
-        indexes = self.view.tableView.selectionModel().selectedIndexes()
-        if indexes:
-            return indexes[0].row(), len(indexes)
-        else:
-            return len(self.model.data_list), 1
+        rows = set()
+        for index in self.view.tableView.selectionModel().selectedIndexes():
+            rows.add(index.row())
+        if len(rows) == 0:
+            rows.add(self.model.rowCount())
+        return rows
 
     def undo(self):
         self.undo_stack.undo()
@@ -77,16 +78,16 @@ class Control(QtGui.QMainWindow):
             self.undo_stack.push(command)
 
     def add_row(self):
-        row, count = self.get_selected_rows()
-        self.undo_stack.push(InsertRowsCommand(self.model, row, 1))
+        rows = self.get_selected_rows()
+        self.undo_stack.push(InsertRowCommand(self.model, max(rows)))
 
     def duplicate_row(self):
-        row, count = self.get_selected_rows()
-        self.undo_stack.push(DuplicateRowCommand(self.model, row))
+        rows = self.get_selected_rows()
+        self.undo_stack.push(DuplicateRowCommand(self.model, max(rows)))
 
     def remove_rows(self):
-        row, count = self.get_selected_rows()
-        self.undo_stack.push(RemoveRowsCommand(self.model, row, count))
+        rows = self.get_selected_rows()
+        self.undo_stack.push(RemoveRowsCommand(self.model, min(rows), len(rows)))
 
     def open(self):
         file_name = QFileDialog.getOpenFileName(self, aption="Open CSV file", filter="CSV file (*.csv)")[0]

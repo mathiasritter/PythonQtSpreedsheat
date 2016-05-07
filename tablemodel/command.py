@@ -18,19 +18,18 @@ class EditCommand(QUndoCommand):
         self.model.setData(self.index, self.new_value)
 
 
-class InsertRowsCommand(QUndoCommand):
+class InsertRowCommand(QUndoCommand):
 
-    def __init__(self, model, row, count):
+    def __init__(self, model, row):
         super().__init__()
         self.model = model
         self.row = row
-        self.count = count
 
     def undo(self):
-        self.model.removeRows(self.row, self.count)
+        self.model.removeRows(self.row, 1)
 
     def redo(self):
-        self.model.insertRows(self.row, self.count)
+        self.model.insertRows(self.row, 1)
 
 
 class RemoveRowsCommand(QUndoCommand):

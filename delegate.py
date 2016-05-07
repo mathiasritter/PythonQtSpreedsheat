@@ -5,14 +5,14 @@ from tablemodel.command import EditCommand
 
 class ItemDelegate(QStyledItemDelegate):
 
-    def __init__(self, undo_stack):
+    def __init__(self, control):
         super().__init__()
-        self.undo_stack = undo_stack
+        self.control = control
         self.edit = None
 
     def setModelData(self, editor, model, index):
         self.edit.new_value = editor.text()
-        self.undo_stack.push(self.edit)
+        self.control.push_with_text(self.edit, "Edit Cell")
 
     def createEditor(self, parent, option, index):
         return QLineEdit(parent)

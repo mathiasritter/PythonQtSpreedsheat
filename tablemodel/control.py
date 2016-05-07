@@ -24,7 +24,7 @@ class Control(QtGui.QMainWindow):
         self.view = Ui_MainWindow()
         self.view.setupUi(self)
         self.view.tableView.setModel(self.model)
-        self.view.tableView.setItemDelegate(ItemDelegate(self.undo_stack))
+        self.view.tableView.setItemDelegate(ItemDelegate(self))
 
         self.connect_elements()
 
@@ -41,6 +41,16 @@ class Control(QtGui.QMainWindow):
         self.view.actionPaste.triggered.connect(self.paste)
         self.view.actionCut.triggered.connect(self.cut)
 
+    def push_with_text(self, command, text):
+        self.undo_stack.beginMacro(text)
+        self.undo_stack.push(command)
+        self.undo_stack.endMacro()
+        self.set_undo_redo_text()
+
+    def set_undo_redo_text(self):
+        self.view.actionUndo.setText("Undo " + self.undo_stack.undoText())
+        self.view.actionRedo.setText("Redo " + self.undo_stack.redoText())
+
     def get_selected_rows(self):
         rows = set()
         for index in self.view.tableView.selectionModel().selectedIndexes():
@@ -51,9 +61,11 @@ class Control(QtGui.QMainWindow):
 
     def undo(self):
         self.undo_stack.undo()
+        self.set_undo_redo_text()
 
     def redo(self):
         self.undo_stack.redo()
+        self.set_undo_redo_text()
 
     def copy(self):
         selection = self.view.tableView.selectionModel().selectedIndexes()
@@ -66,7 +78,8 @@ class Control(QtGui.QMainWindow):
     def cut(self):
         if self.copy():
             selection = self.view.tableView.selectionModel().selectedIndexes()
-            self.undo_stack.push(EditCommand(self.model, selection[0]))
+            command = EditCommand(self.model, selection[0])
+            self.push_with_text(command, "Cut")
 
     def paste(self):
         selection = self.view.tableView.selectionModel().selectedIndexes()
@@ -75,19 +88,22 @@ class Control(QtGui.QMainWindow):
             text = QApplication.clipboard().text()
             command = EditCommand(self.model, selection[0])
             command.new_value = text
-            self.undo_stack.push(command)
+            self.push_with_text(command, "Paste")
 
     def add_row(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(InsertRowCommand(self.model, max(rows)))
+        command = InsertRowCommand(self.model, max(rows))
+        self.push_with_text(command, "Insert Row")
 
     def duplicate_row(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(DuplicateRowCommand(self.model, max(rows)))
+        command = DuplicateRowCommand(self.model, max(rows))
+        self.push_with_text(command, "Duplicate Row")
 
     def remove_rows(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(RemoveRowsCommand(self.model, min(rows), len(rows)))
+        command = RemoveRowsCommand(self.model, min(rows), len(rows))
+        self.undo_stack.push(command, "Remove Row(s)")
 
     def open(self):
         file_name = QFileDialog.getOpenFileName(self, aption="Open CSV file", filter="CSV file (*.csv)")[0]

@@ -19,7 +19,7 @@ class Control(QMainWindow):
 
         self.view = Ui_MainWindow()
         self.view.setupUi(self)
-        self.view.tableWidget.setItemDelegate(ItemDelegate(self.undo_stack))
+        self.view.tableWidget.setItemDelegate(ItemDelegate(self))
 
         self.connect_elements()
 
@@ -35,6 +35,32 @@ class Control(QMainWindow):
         self.view.actionCopy.triggered.connect(self.copy)
         self.view.actionPaste.triggered.connect(self.paste)
         self.view.actionCut.triggered.connect(self.cut)
+
+    def push_with_text(self, command, text):
+        self.undo_stack.beginMacro(text)
+        self.undo_stack.push(command)
+        self.undo_stack.endMacro()
+        self.set_undo_redo_text()
+
+    def set_undo_redo_text(self):
+        self.view.actionUndo.setText("Undo " + self.undo_stack.undoText())
+        self.view.actionRedo.setText("Redo " + self.undo_stack.redoText())
+
+    def get_selected_rows(self):
+        rows = set()
+        for index in self.view.tableWidget.selectedIndexes():
+            rows.add(index.row())
+        if len(rows) == 0:
+            rows.add(self.view.tableWidget.rowCount())
+        return rows
+
+    def undo(self):
+        self.undo_stack.undo()
+        self.set_undo_redo_text()
+
+    def redo(self):
+        self.undo_stack.redo()
+        self.set_undo_redo_text()
 
     def save(self):
         if self.file_name is None:
@@ -73,31 +99,20 @@ class Control(QMainWindow):
                 for col_index, item in enumerate(row):
                     self.view.tableWidget.setItem(row_index, col_index, QTableWidgetItem(item))
 
-    def undo(self):
-        self.undo_stack.undo()
-
-    def redo(self):
-        self.undo_stack.redo()
-
-    def get_selected_rows(self):
-        rows = set()
-        for index in self.view.tableWidget.selectedIndexes():
-            rows.add(index.row())
-        if len(rows) == 0:
-            rows.add(self.view.tableWidget.rowCount())
-        return rows
-
     def insert_row(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(InsertRowCommand(self.view.tableWidget, max(rows)))
+        command = InsertRowCommand(self.view.tableWidget, max(rows))
+        self.push_with_text(command, "Insert Row")
 
     def remove_rows(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(RemoveRowsCommand(self.view.tableWidget, min(rows), len(rows)))
+        command = RemoveRowsCommand(self.view.tableWidget, min(rows), len(rows))
+        self.undo_stack.push(command, "Remove Row(s)")
 
     def duplicate_row(self):
         rows = self.get_selected_rows()
-        self.undo_stack.push(DuplicateRowCommand(self.view.tableWidget, max(rows)))
+        command = DuplicateRowCommand(self.view.tableWidget, max(rows))
+        self.undo_stack.push(command, "Duplicate Row")
 
     def copy(self):
         selection = self.view.tableWidget.selectedIndexes()
@@ -110,7 +125,8 @@ class Control(QMainWindow):
     def cut(self):
         if self.copy():
             selection = self.view.tableWidget.selectedIndexes()
-            self.undo_stack.push(EditCommand(self.view.tableWidget.model(), selection[0]))
+            command = EditCommand(self.view.tableWidget.model(), selection[0])
+            self.push_with_text(command, "Cut")
 
     def paste(self):
         selection = self.view.tableWidget.selectedIndexes()
@@ -119,7 +135,7 @@ class Control(QMainWindow):
             text = QApplication.clipboard().text()
             command = EditCommand(self.view.tableWidget.model(), selection[0])
             command.new_value = text
-            self.undo_stack.push(command)
+            self.push_with_text(command, "Paste")
 
 
 if __name__ == "__main__":

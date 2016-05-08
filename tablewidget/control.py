@@ -10,7 +10,14 @@ from tablewidget.view import Ui_MainWindow
 
 
 class Control(QMainWindow):
+
+
     def __init__(self):
+        """
+        | Creating undo stack and attribute for current file name.
+        | Initializing view and connecting ui elements with methods.
+        """
+
         super().__init__()
 
         self.file_name = None
@@ -23,6 +30,10 @@ class Control(QMainWindow):
         self.connect_elements()
 
     def connect_elements(self):
+        """
+        Connect UI Elements
+        """
+
         self.view.actionOpen.triggered.connect(self.open)
         self.view.actionSave.triggered.connect(self.save)
         self.view.actionSave_As.triggered.connect(self.save_as)
